@@ -7,6 +7,15 @@ A ListView or FlatList  with pull-to-refresh, infinite scrolling and more for An
 ![](https://raw.githubusercontent.com/FaridSafi/react-native-gifted-listview/master/Captures/ios_refresh_page_demo.gif)
 ![](https://raw.githubusercontent.com/FaridSafi/react-native-gifted-listview/master/Captures/android_refresh_page_demo.gif)
 
+
+## 安装
+
+`npm install react-native-giftedlist` or `yarn add react-native-giftedlist`
+
+
+## 使用
+
+
 ### Simple example
 
 
