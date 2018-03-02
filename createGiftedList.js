@@ -221,7 +221,7 @@ const createGiftedList = (WrappedComponent) => {
               alignItems: 'center',
               backgroundColor: '#f5f5f5'
             }}>
-              <Image source={require('../../Images/noNetwork.png')}
+              <Image source={require('../noNetwork.png')}
                      style={{width: screenWidth, height: screenWidth}}></Image>
             </View>
           </TouchableWithoutFeedback>
