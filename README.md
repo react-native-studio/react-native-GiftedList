@@ -1,4 +1,4 @@
-# react-native-GiftedList
+# react-native-GiftedList [![npm version](https://badge.fury.io/js/react-native-giftedlist.svg)](https://badge.fury.io/js/react-native-giftedlist)
 
 A ListView or FlatList  with pull-to-refresh, infinite scrolling and more for Android and iOS React-Native apps
 
