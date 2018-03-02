@@ -1,0 +1,24 @@
+{
+  "name": "react-native-giftedlist",
+  "version": "0.0.1",
+  "description": "",
+  "main": "createGiftedList",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-native-studio/react-native-GiftedList.git"
+  },
+  "keywords": [
+    "gifted",
+    "list",
+    "FlatList"
+  ],
+  "author": "react-native-studio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/react-native-studio/react-native-GiftedList/issues"
+  },
+  "homepage": "https://github.com/react-native-studio/react-native-GiftedList#readme"
+}
