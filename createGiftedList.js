@@ -46,30 +46,24 @@ const createGiftedList = (WrappedComponent) => {
       this._setRows([]);
       this._setComponentType(WrappedComponent.displayName)
 
-      //
-
-      var ds = null;
+      var ds = null,dataSource=null;
       if (props.withSections === true) {
         ds = new ListView.DataSource({
           rowHasChanged: props.rowHasChanged ? props.rowHasChanged : (row1, row2) => row1 !== row2,
           sectionHeaderHasChanged: (section1, section2) => section1 !== section2,
         });
-        this.state = {
-          dataSource: ds.cloneWithRowsAndSections(this._getRows()),
-          isRefreshing: false,
-          paginationStatus: 'firstLoad',
-          data: this._getRows()
-        };
+        dataSource=ds.cloneWithRowsAndSections(this._getRows())
       } else {
         ds = new ListView.DataSource({
           rowHasChanged: props.rowHasChanged ? props.rowHasChanged : (row1, row2) => row1 !== row2,
         });
-        this.state = {
-          dataSource: ds.cloneWithRows(this._getRows()),
-          isRefreshing: false,
-          paginationStatus: 'firstLoad',
-          data: this._getRows()
-        };
+        dataSource=ds.cloneWithRows(this._getRows())
+      }
+      this.state={
+        dataSource,//供ListView使用
+        isRefreshing:false,
+        paginationStatus:'firstLoad',
+        data:this._getRows(),//供FlatList使用
       }
     }
 
@@ -151,43 +145,43 @@ const createGiftedList = (WrappedComponent) => {
     }
 
     paginationFetchingView = () => {
-      if (this.props.paginationFetchingView) {
-        return this.props.paginationFetchingView();
+      const {paginationFetchingView,customStyles}=this.props;
+      if (paginationFetchingView) {
+        return paginationFetchingView();
       }
-
       return (
-        <View style={[styles.paginationView, this.props.customStyles.paginationView]}>
+        <View style={[styles.paginationView,customStyles.paginationView]}>
           <ActivityIndicator/>
+          <Text style={[styles.loadingLabel, customStyles.loadingLabel]}>数据加载中</Text>
         </View>
       );
     }
     paginationAllLoadedView = () => {
-
-      if (this.props.paginationAllLoadedView) {
-        return this.props.paginationAllLoadedView();
+      const {paginationAllLoadedView,customStyles}=this.props;
+      if (paginationAllLoadedView) {
+        return paginationAllLoadedView();
       }
 
       return (
-        <View style={[styles.paginationView, this.props.customStyles.paginationView]}>
-
-          <Text style={[styles.actionsLabel, this.props.customStyles.actionsLabel]}>
+        <View style={[styles.paginationView, customStyles.paginationView]}>
+          <Text style={[styles.actionsLabel, customStyles.actionsLabel]}>
             没有更多内容
           </Text>
         </View>
       );
     }
     paginationWaitingView = (paginateCallback) => {
-      if (this.props.paginationWaitingView) {
-        return this.props.paginationWaitingView(paginateCallback);
+      const {paginationWaitingView,customStyles}=this.props;
+      if (paginationWaitingView) {
+        return paginationWaitingView(paginateCallback);
       }
-
       return (
         <TouchableHighlight
           underlayColor='#c8c7cc'
           onPress={paginateCallback}
-          style={[styles.paginationView, this.props.customStyles.paginationView]}
+          style={[styles.paginationView,customStyles.paginationView]}
         >
-          <Text style={[styles.actionsLabel, this.props.customStyles.actionsLabel]}>
+          <Text style={[styles.actionsLabel,customStyles.actionsLabel]}>
             加载更多...
           </Text>
         </TouchableHighlight>
@@ -195,7 +189,6 @@ const createGiftedList = (WrappedComponent) => {
     }
     headerView = () => {
       if (this.state.paginationStatus === 'firstLoad' || !this.props.headerView) {
-        // return<View style={{height:100,width:200,backgroundColor:'red'}}></View>
         return null;
       }
       return this.props.headerView();
@@ -203,65 +196,34 @@ const createGiftedList = (WrappedComponent) => {
 
 
     emptyView = (refreshCallback) => {
-      if (this.props.emptyView) {
-        return this.props.emptyView(refreshCallback);
+      const {emptyView,customStyles}=this.props;
+      if (emptyView) {
+        return emptyView(refreshCallback);
       }
       return (
-        <View style={[styles.defaultView, this.props.customStyles.defaultView]}>
-          <Text style={[styles.defaultViewTitle, this.props.customStyles.defaultViewTitle]}>
-
+        <View style={[styles.defaultView,customStyles.defaultView]}>
+          <Text style={[styles.defaultViewTitle, customStyles.defaultViewTitle]}>
           </Text>
-
           <TouchableHighlight
             underlayColor='#c8c7cc'
             onPress={refreshCallback}
           >
             <Text>
-
             </Text>
           </TouchableHighlight>
         </View>
       );
     }
     renderSeparator = () => {
-      if (this.props.renderSeparator) {
-        return this.props.renderSeparator();
+      const {renderSeparator,customStyles}=this.props;
+      if (renderSeparator) {
+        return renderSeparator();
       }
 
       return (
-        <View style={[styles.separator, this.props.customStyles.separator]}/>
+        <View style={[styles.separator,customStyles.separator]}/>
       );
     }
-
-    getInitialState() {
-      this._setPage(1);
-      this._setRows([]);
-
-      var ds = null;
-      if (this.props.withSections === true) {
-        ds = new ListView.DataSource({
-          rowHasChanged: this.props.rowHasChanged ? this.props.rowHasChanged : (row1, row2) => row1 !== row2,
-          sectionHeaderHasChanged: (section1, section2) => section1 !== section2,
-        });
-        return {
-          dataSource: ds.cloneWithRowsAndSections(this._getRows()),
-          isRefreshing: false,
-          paginationStatus: 'firstLoad',
-          data: this._getRows()
-        };
-      } else {
-        ds = new ListView.DataSource({
-          rowHasChanged: this.props.rowHasChanged ? this.props.rowHasChanged : (row1, row2) => row1 !== row2,
-        });
-        return {
-          dataSource: ds.cloneWithRows(this._getRows()),
-          isRefreshing: false,
-          paginationStatus: 'firstLoad',
-          data: this._getRows()
-        };
-      }
-    }
-
     componentDidMount() {
       this._isMounted=true;
       this.props.onFetch(this._getPage(), this._postRefresh, {firstLoad: true});
@@ -328,20 +290,20 @@ const createGiftedList = (WrappedComponent) => {
             dataSource: this.state.dataSource.cloneWithRowsAndSections(rows),
             isRefreshing: false,
             data: rows,
-            paginationStatus: (options.allLoaded === true ? 'allLoaded' : 'waiting'),
+            paginationStatus: (options.allLoaded === true ? 'allLoaded' : 'fetching'),
           });
         } else {
           this.setState({
             dataSource: this.state.dataSource.cloneWithRows(rows),
             isRefreshing: false,
             data: rows,
-            paginationStatus: (options.allLoaded === true ? 'allLoaded' : 'waiting'),
+            paginationStatus: (options.allLoaded === true ? 'allLoaded' : 'fetching'),
           });
         }
       } else {
         this.setState({
           isRefreshing: false,
-          paginationStatus: (options.allLoaded === true ? 'allLoaded' : 'waiting'),
+          paginationStatus: (options.allLoaded === true ? 'allLoaded' : 'fetching'),
         });
       }
     }
@@ -441,8 +403,11 @@ const createGiftedList = (WrappedComponent) => {
 }
 const styles=StyleSheet.create({
   separator: {
-    height: 1,
+    height: StyleSheet.hairlineWidth,
     backgroundColor: '#CCC'
+  },
+  loadingLabel:{
+    fontSize:12,
   },
   actionsLabel: {
     fontSize: 12,
