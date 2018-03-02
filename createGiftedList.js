@@ -206,28 +206,6 @@ const createGiftedList = (WrappedComponent) => {
       if (this.props.emptyView) {
         return this.props.emptyView(refreshCallback);
       }
-
-      if (this.props.network == 'none' || this.props.network == 'NONE') {
-        return (
-          <TouchableWithoutFeedback onPress={() => {
-            this._refresh()
-          }}>
-            <View style={{
-              position: 'absolute',
-              top: 0,
-              bottom: 0,
-              height: screenHeight,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#f5f5f5'
-            }}>
-              <Image source={require('../noNetwork.png')}
-                     style={{width: screenWidth, height: screenWidth}}></Image>
-            </View>
-          </TouchableWithoutFeedback>
-        )
-      }
-
       return (
         <View style={[styles.defaultView, this.props.customStyles.defaultView]}>
           <Text style={[styles.defaultViewTitle, this.props.customStyles.defaultViewTitle]}>
