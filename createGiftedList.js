@@ -13,9 +13,9 @@ var {
   Image,
   StyleSheet,
   FlatList,
+  Dimensions
 } = require('react-native');
-import {Metrics} from '../../Themes'
-
+const {width:screenWidth,height:screenHeight}=Dimensions.get('window')
 // small helper function which merged two objects into one
 function MergeRecursive(obj1, obj2) {
   for (var p in obj2) {
@@ -216,13 +216,13 @@ const createGiftedList = (WrappedComponent) => {
               position: 'absolute',
               top: 0,
               bottom: 0,
-              height: Metrics.screenHeight,
+              height: screenHeight,
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: '#f5f5f5'
             }}>
               <Image source={require('../../Images/noNetwork.png')}
-                     style={{width: Metrics.screenWidth, height: Metrics.screenWidth}}></Image>
+                     style={{width: screenWidth, height: screenWidth}}></Image>
             </View>
           </TouchableWithoutFeedback>
         )
