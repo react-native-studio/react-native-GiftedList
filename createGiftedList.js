@@ -371,6 +371,7 @@ const createGiftedList = (WrappedComponent) => {
           stickySectionHeadersEnabled: this.props.stickySectionHeadersEnabled,
           automaticallyAdjustContentInsets: false,
           scrollEnabled: this.props.scrollEnabled,
+          initialListSize:this.props.initialListSize,
           canCancelContentTouches: true,
           refreshControl: this.props.refreshable === true ? this.renderRefreshControl() : null,
           ...this.props,
@@ -386,11 +387,12 @@ const createGiftedList = (WrappedComponent) => {
           ItemSeparatorComponent: this.renderSeparator,
           ListHeaderComponent: this.headerView,
           ListFooterComponent: this._renderPaginationView,
+          initialNumToRender:this.props.initialListSize,
+          refreshControl: this.props.refreshable === true ? this.renderRefreshControl() : null,
           ...this.props,
           onEndReached: this.props.infinite ? this._onPaginate : null,
           onEndReachedThreshold: 40,
           style: this.props.style,
-          refreshControl: this.props.refreshable === true ? this.renderRefreshControl() : null,
         }
       }
       return (
